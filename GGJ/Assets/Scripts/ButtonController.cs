@@ -1,12 +1,21 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ButtonController : MonoBehaviour, IGrabbable {
-    
+
+    private bool isPressed = false;
+    [SerializeField]
+    private List<IButtonTarget> targets;
+
     public void Grab(HandController handController) {
-        throw new System.NotImplementedException();
+        foreach (IButtonTarget target in targets) {
+            target.ButtonPressed();
+        }
     }
 
     public void Release() {
-        throw new System.NotImplementedException();
+        foreach (IButtonTarget target in targets) {
+            target.ButtonReleased();
+        }
     }
 }
