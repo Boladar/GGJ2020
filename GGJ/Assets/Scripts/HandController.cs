@@ -1,13 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class HandController : MonoBehaviour {
-
+    
     private bool isGrabbing = false;
     private IGrabbable currentlyGrabbed = null;
-    private Vector3 currentDestination;
+
+    [SerializeField]
+    private Transform grabbingTransform;
+    public Transform GrabbingTransform => grabbingTransform;
+    
     private Rigidbody rigidbody;
     
     [SerializeField]
@@ -41,18 +43,17 @@ public class HandController : MonoBehaviour {
             IGrabbable grabbable = grabbedGameObject.GetComponent<IGrabbable>();
             if (grabbable != null) {
                 grabbable.Grab(this);
+                isGrabbing = true;
+                currentlyGrabbed = grabbable;
             }
         }
         else {
             Debug.DrawRay(transform.position,Vector3.forward * GrabDistance,Color.yellow);
         }
-
-
     }
     
     // Start is called before the first frame update
     public void Start() {
-        currentDestination = transform.position;
         rigidbody = GetComponent<Rigidbody>();
     }
 
@@ -81,8 +82,14 @@ public class HandController : MonoBehaviour {
             rigidbody.AddForce(Vector3.back * Thrust);
         }
 
-        if (Input.GetKey(GrabKeyCode)) {
-            Grab();
+        if (Input.GetKeyDown(GrabKeyCode)) {
+            if (isGrabbing) {
+                currentlyGrabbed.Release();
+            }
+            else {
+                Grab();
+            }
+            
         }
     }
 }

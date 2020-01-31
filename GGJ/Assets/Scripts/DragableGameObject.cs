@@ -10,13 +10,14 @@ public class DragableGameObject : MonoBehaviour, IGrabbable {
     }
 
     public void Release() {
-        assignedHand = null;
+        throw new NotImplementedException();
     }
-    
+
+
     private void Update() {
 
         if (assignedHand != null) {
-            dragPoint.position = assignedHand.transform.position;
+            transform.position = assignedHand.GrabbingTransform.position;
         }
         
     }
