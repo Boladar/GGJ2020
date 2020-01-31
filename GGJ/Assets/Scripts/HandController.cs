@@ -36,16 +36,17 @@ public class HandController : MonoBehaviour {
         if (Physics.Raycast(transform.position, Vector3.forward,out hit,GrabDistance)) {
             Debug.DrawRay(transform.position,Vector3.forward * hit.distance,Color.yellow);
             Debug.Log(hit.ToString());
+            
+            GameObject grabbedGameObject = hit.transform.gameObject;
+            IGrabbable grabbable = grabbedGameObject.GetComponent<IGrabbable>();
+            if (grabbable != null) {
+                grabbable.Grab(this);
+            }
         }
         else {
             Debug.DrawRay(transform.position,Vector3.forward * GrabDistance,Color.yellow);
         }
 
-        GameObject grabbedGameObject = hit.transform.gameObject;
-        IGrabbable grabbable = grabbedGameObject.GetComponent<IGrabbable>();
-        if (grabbable != null) {
-            grabbable.Grab(this);
-        }
 
     }
     
