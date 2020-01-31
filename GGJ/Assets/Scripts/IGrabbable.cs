@@ -1,3 +1,3 @@
-﻿public interface IGrabbable {
-        
-}
+﻿public interface IGrabbable { 
+     void Grab();
+ }
