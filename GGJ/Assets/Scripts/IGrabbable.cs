@@ -1,3 +1,3 @@
 ﻿public interface IGrabbable { 
-     void Grab();
+     void Grab(HandController handController);
  }
