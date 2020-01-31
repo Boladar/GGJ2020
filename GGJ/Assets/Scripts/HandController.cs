@@ -40,6 +40,13 @@ public class HandController : MonoBehaviour {
         else {
             Debug.DrawRay(transform.position,Vector3.forward * GrabDistance,Color.yellow);
         }
+
+        GameObject grabbedGameObject = hit.transform.gameObject;
+        IGrabbable grabbable = grabbedGameObject.GetComponent<IGrabbable>();
+        if (grabbable != null) {
+            grabbable.Grab(this);
+        }
+
     }
     
     // Start is called before the first frame update
